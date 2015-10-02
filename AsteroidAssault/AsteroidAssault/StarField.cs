@@ -14,7 +14,8 @@ namespace AsteroidAssault
         private int screenHeight = 600;
         private Random rand = new Random();
         private Color[] colors = {Color.White, Color.Yellow,
-                                 Color.SlateGray, Color.Red, Color.Blue};
+                                 Color.SlateGray, Color.Blue,Color.White, Color.Yellow,
+                                 Color.SlateGray, };
 
         public StarField(int screenWidth, int screenHeight,
             int starCount, Vector2 starVelocity, Texture2D texture,
