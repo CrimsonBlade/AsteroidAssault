@@ -13,7 +13,7 @@ namespace AsteroidAssault
 
         protected List<Rectangle> frames = new List<Rectangle>();
         private int frameWidth = 0;
-        private int frameHight = 0;
+        private int frameHeight = 0;
         private int currentFrame;
         private float frameTime = 0.1f;
         private float timeForCurrentFrame = 0.0f;
@@ -73,7 +73,7 @@ namespace AsteroidAssault
             get
             {
                 return new Rectangle((int)location.X, (int)location.Y,
-                  frameWidth, frameHight);
+                  frameWidth, frameHeight);
             }
         }
 
@@ -82,7 +82,7 @@ namespace AsteroidAssault
             get
             {
                 return location + new Vector2(frameWidth / 2,
-                    frameHight / 2);
+                    frameHeight / 2);
             }
         }
 
@@ -91,7 +91,7 @@ namespace AsteroidAssault
             get
             {
                 return new Rectangle((int)location.X + BoundingXPadding, (int)location.Y + BoundingYPadding,
-                    frameWidth - (BoundingXPadding * 2), frameHight - (BoundingYPadding * 2));
+                    frameWidth - (BoundingXPadding * 2), frameHeight - (BoundingYPadding * 2));
             }
         }
 
@@ -105,7 +105,7 @@ namespace AsteroidAssault
             if (Vector2.Distance(Center, otherCenter) < (CollisionRadius + otherRadius))
                 return true;
             else
-                return false; 
+                return false;
         }
 
         public void AddFrame(Rectangle frameRectangle)
@@ -113,36 +113,37 @@ namespace AsteroidAssault
             frames.Add(frameRectangle);
         }
 
-    }
 
-    public Sprite( Vector2 location, Texture2D texture, Rectangle initialFrame, 
-        Vector2 velocity)
-    {
-        this.location = location;
-        Texture = texture;
-        this.velocity = velocity;
 
-        frames.Add(initialFrame);
-        frameWidth = initialFrame.Width;
-        frameHeight = initialFrame.Height;
-
-    }
-
-    public virtual void Update(GameTime gameTime)
-    {
-        float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        timeForCurrentFrame += elapsed;
-        if (timeForCurrentFrame >= FrameTime)
+        public Sprite(Vector2 location, Texture2D texture, Rectangle initialFrame,
+            Vector2 velocity)
         {
-            currentFrame = (currentFrame + 1) % (frames.Count);
-            timeForCurrentFrame = 0.0f;
-        }
-        location += (velocity * elapsed);
-    }
+            this.location = location;
+            Texture = texture;
+            this.velocity = velocity;
 
-    public virtual void Draw(SpriteBatch spriteBatch)
-    {
-        spriteBatch.Draw(Texture, Center, Source, tintColor, rotation,
-            new Vector2(frameWidth / 2, frameHeight / 2), 1.0f, SpriteEffects.None, 0.0f);
+            frames.Add(initialFrame);
+            frameWidth = initialFrame.Width;
+            frameHeight = initialFrame.Height;
+
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            timeForCurrentFrame += elapsed;
+            if (timeForCurrentFrame >= FrameTime)
+            {
+                currentFrame = (currentFrame + 1) % (frames.Count);
+                timeForCurrentFrame = 0.0f;
+            }
+            location += (velocity * elapsed);
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, Center, Source, tintColor, rotation,
+                new Vector2(frameWidth / 2, frameHeight / 2), 1.0f, SpriteEffects.None, 0.0f);
+        }
     }
 }
