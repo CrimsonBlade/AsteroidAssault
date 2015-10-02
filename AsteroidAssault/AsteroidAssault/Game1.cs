@@ -20,6 +20,7 @@ namespace AsteroidAssault
         SpriteBatch spriteBatch;
         StarField starField;
         AsteroidManager asteroidManager;
+        PlayerManager playerManager;
 
         enum GameStates { TitleScreen, Playing, PlayerDead, GameOver};
         GameStates gameState = GameStates.Playing;
@@ -64,6 +65,9 @@ namespace AsteroidAssault
 
             asteroidManager = new AsteroidManager(10, spriteSheet, new Rectangle(0, 0, 50, 50),
                 20, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height);
+
+            playerManager = new PlayerManager(spriteSheet, new Rectangle(0, 150, 50, 50), 3,
+                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
         }
 
         /// <summary>
@@ -95,6 +99,7 @@ namespace AsteroidAssault
                 case GameStates.Playing:
                     starField.Update(gameTime);
                     asteroidManager.Update(gameTime);
+                    playerManager.Update(gameTime);
                     break;
 
                 case GameStates.PlayerDead:
@@ -131,6 +136,7 @@ namespace AsteroidAssault
             {
                 starField.Draw(spriteBatch);
                 asteroidManager.Draw(spriteBatch);
+                playerManager.Draw(spriteBatch);
             }
 
             if ((gameState == GameStates.GameOver))
