@@ -118,7 +118,7 @@ namespace AsteroidAssault
             {
                 checkShotToPlayerCollisions();
                 checkShotToEnemyCollisions();
-                checkShotToAsteroidCollisions();
+                checkAsteroidToPlayerCollisions();
             }
         }
 

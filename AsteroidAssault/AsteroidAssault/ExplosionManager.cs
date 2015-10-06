@@ -63,7 +63,7 @@ namespace AsteroidAssault
         public void AddExplosion(Vector2 location, Vector2 momentum)
         {
             Vector2 pieceLocation = location - new Vector2(pieceRectangles[0].Width / 2, pieceRectangles[0].Height / 2);
-
+            
             int pieces = rand.Next(minPieceCount, maxPieceCount + 1);
             for (int x = 0; x < pieces; x++)
             {
@@ -77,8 +77,9 @@ namespace AsteroidAssault
                 ExplosionParticles.Add(new Particle(location, texture, pointRectangle, randomDirection((float)rand.Next(pointSpeedMin, pointSpeedMax)) + momentum,
                      Vector2.Zero, explosionMaxSpeed, durationCount, initialColor, finalColor));
             }
+            SoundManager.PlayExplosion();
         }
-
+        
         //Update Method for the Class
         public void Update(GameTime gameTime)
         {
