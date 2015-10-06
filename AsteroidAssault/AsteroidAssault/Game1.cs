@@ -22,6 +22,8 @@ namespace AsteroidAssault
         AsteroidManager asteroidManager;
         PlayerManager playerManager;
         EnemyManager enemyManager;
+        ExplosionManager explosionManager;
+        CollisionManager collisionManager;
 
         enum GameStates { TitleScreen, Playing, PlayerDead, GameOver};
         GameStates gameState = GameStates.Playing;
@@ -72,6 +74,11 @@ namespace AsteroidAssault
 
             enemyManager = new EnemyManager(spriteSheet, new Rectangle(0, 200, 50, 50), 6, playerManager,
                 new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
+
+            explosionManager = new ExplosionManager(spriteSheet, new Rectangle(0, 100, 50, 50), 3,
+                new Rectangle(0, 450, 2, 2));
+
+            collisionManager = new CollisionManager(asteroidManager, playerManager, enemyManager, explosionManager);
         }
 
         /// <summary>
@@ -105,6 +112,8 @@ namespace AsteroidAssault
                     asteroidManager.Update(gameTime);
                     playerManager.Update(gameTime);
                     enemyManager.Update(gameTime);
+                    explosionManager.Update(gameTime);
+                    collisionManager.CheckCollisions();
                     break;
 
                 case GameStates.PlayerDead:
@@ -143,6 +152,7 @@ namespace AsteroidAssault
                 asteroidManager.Draw(spriteBatch);
                 playerManager.Draw(spriteBatch);
                 enemyManager.Draw(spriteBatch);
+                explosionManager.Draw(spriteBatch);
             }
 
             if ((gameState == GameStates.GameOver))
